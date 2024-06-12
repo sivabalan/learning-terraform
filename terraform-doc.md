@@ -117,4 +117,25 @@ resource "aws_instance" "main_instances" {
 }
 
 
+##################################################################################################################
+# LOOPS
+##################################################################################################################
 
+
+##################################################################################################################
+# LOCALS
+##################################################################################################################
+- Locals are variables that are to be called and availble for the block of code in which is written
+
+ex:
+locals {
+  instance_type="a1.large"
+}
+
+
+resource "aws_instance" "main_instances2" {
+  for_each      = var.instances
+  ami           = each.value
+  instance_type = local.instance_type
+  key_name      = var.key_name
+}
