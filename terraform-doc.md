@@ -52,7 +52,8 @@
 ##################################################################################################################
 # MAPPING
 ##################################################################################################################
-- 
+- Terraform Mapping are used for selecting choices based on input given
+
 Ex:  
    resource "aws_launch_template" "main_launch_template" {
     name_prefix            = "main_launch_template"
@@ -76,3 +77,17 @@ Ex:
     description = "Selection for available Env"
     default     = "dev"
     }
+
+
+##################################################################################################################
+# CONDITIONALS
+##################################################################################################################
+- Terraform Condition are used for Choices ex: instance_types for AWS EC2
+
+Syntax: 
+ - condition ? <Value_when_true> : <Value_when_not_true>
+
+ 
+dev: instance_type: t2.micro
+
+prod: instance_type: m5.large

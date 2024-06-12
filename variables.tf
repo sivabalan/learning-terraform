@@ -52,8 +52,8 @@ variable "key_name" {
   default     = "kp"
 }
 
-
 variable "env" {
   description = "Selection for available Env"
   default     = "dev"
 }
+
