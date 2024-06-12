@@ -38,8 +38,8 @@ variable "ami_map" {
 }
 
 #variable "ami" {
-  #description = "Image for AutoScaling Groups"
-  #default     = "ami-09040d770ffe2224f"
+#description = "Image for AutoScaling Groups"
+#default     = "ami-09040d770ffe2224f"
 #}
 
 variable "instance_type" {
@@ -57,3 +57,9 @@ variable "env" {
   default     = "dev"
 }
 
+variable "instances" {
+  default = {
+    "web-server1" = "ami-033fabdd332044f06"
+    "web-server2" = "ami-0f30a9c3a48f3fa79"
+  }
+}

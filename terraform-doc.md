@@ -87,7 +87,34 @@ Ex:
 Syntax: 
  - condition ? <Value_when_true> : <Value_when_not_true>
 
- 
+
 dev: instance_type: t2.micro
 
 prod: instance_type: m5.large
+
+
+##################################################################################################################
+# FOR EACH LOOP
+##################################################################################################################
+- Usage: Dynamically define the resources based on elements of map
+
+Syntax: 
+for_each = var.instances
+
+ex:
+variable "instances" {
+  default = {
+    "web-server1" = "ami-033fabdd332044f06"
+    "web-server2" = "ami-0f30a9c3a48f3fa79"
+  }
+}
+
+resource "aws_instance" "main_instances" {
+  for_each      = var.instances
+  ami           = each.value
+  instance_type = var.env == "prod" ? "m5.large" : "t3.micro"
+  key_name      = var.key_name
+}
+
+
+
