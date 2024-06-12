@@ -28,12 +28,23 @@ variable "zoneb_private_subnet_cidr_block" {
   default     = "192.168.4.0/24"
 }
 
+# Based on Env Selection
 variable "ami_map" {
   description = "Mapping of AMI based on Env"
   type        = map(string)
   default = {
     "dev"  = "ami-033fabdd332044f06" # For Dev Env, include Amazon Linux AMI
     "prod" = "ami-0f30a9c3a48f3fa79" # For Prod Env, include UBUNTU AMI
+  }
+}
+
+# Using Lookup Function
+variable "region_map" {
+  description = "Mapping of AMI based on Env"
+  type        = map(string)
+  default = {
+    "us-east-2" = "ami-09040d770ffe2224f" # For Ohio Region
+    "us-west-2" = "ami-0cf2b4e024cdb6960" # For Oregon Region
   }
 }
 

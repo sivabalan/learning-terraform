@@ -128,14 +128,47 @@ resource "aws_instance" "main_instances" {
 - Locals are variables that are to be called and availble for the block of code in which is written
 
 ex:
-locals {
-  instance_type="a1.large"
-}
+  locals {
+    instance_type="a1.large"
+  }
 
 
-resource "aws_instance" "main_instances2" {
-  for_each      = var.instances
-  ami           = each.value
-  instance_type = local.instance_type
-  key_name      = var.key_name
-}
+  resource "aws_instance" "main_instances2" {
+    for_each      = var.instances
+    ami           = each.value
+    instance_type = local.instance_type
+    key_name      = var.key_name
+  }
+
+
+##################################################################################################################
+# LOOKUP
+##################################################################################################################
+  - Look Up does search for outputs bases on inputs offered (Dyanmic Search)
+
+  ex:
+
+    # Using Lookup Function
+  variable "ami_map" {
+    description = "Mapping of AMI based on Env"
+    type        = map(string)
+    default = {
+      "us-east-2" = "ami-09040d770ffe2224f" # For Ohio Region
+      "us-west-2" = "ami-0cf2b4e024cdb6960" # For Oregon Region
+    }
+  }
+
+  locals {
+    image_id = lookup(var.ami_map, var.region)
+  }
+
+
+  resource "aws_launch_template" "main_launch_template" {
+    name_prefix = "main_launch_template"
+    #image_id              = var.ami_map[var.env]
+    image_id               = local.image_id
+    instance_type          = var.env == "prod" ? "m5.large" : "t3.micro"
+    key_name               = var.key_name
+    vpc_security_group_ids = [aws_security_group.main_sg.id]
+    #user_data              = filebase64("./apache.sh")
+  }
