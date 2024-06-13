@@ -28,7 +28,7 @@ variable "zoneb_private_subnet_cidr_block" {
   default     = "192.168.4.0/24"
 }
 
-#Based on Env Selection
+# Using Env Selection, retrieve AMI based on Env 
 variable "ami_map" {
   description = "Mapping of AMI based on Env"
   type        = map(string)
@@ -38,7 +38,7 @@ variable "ami_map" {
   }
 }
 
-# Using Lookup Function
+# Using Lookup Function , to retrieve AMI based on Region
 #variable "region_map" {
  # description = "Mapping of AMI based on Env"
   #type        = map(string)
@@ -48,26 +48,30 @@ variable "ami_map" {
   #}
 #}
 
-#variable "ami" {
+# variable "ami" {
 #description = "Image for AutoScaling Groups"
 #default     = "ami-09040d770ffe2224f"
 #}
+
 
 variable "instance_type" {
   description = "Instance Type for AutoScaling Groups Instances"
   default     = "t2.micro"
 }
 
+
 variable "key_name" {
   description = "Key Pair used for AutoScaling Groups Instances"
   default     = "kp"
 }
 
+# To pass at run time -var='env=dev'
 variable "env" {
   description = "Selection for available Env"
   default     = "dev"
 }
 
+# For_Each Collection
 variable "instances" {
   default = {
     "web-server1" = "ami-033fabdd332044f06"
